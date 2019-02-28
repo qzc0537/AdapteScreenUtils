@@ -37,7 +37,10 @@ object AdaptScreenUtils {
         appDm.densityDpi = actDm.densityDpi
         Log.d(TAG, "adaptScreen=================================")
         Log.d(TAG, "sysDm.density: " + sysDm.density)
-        Log.d(TAG, "appDm.scaledDensity: " + appDm.scaledDensity)
+        Log.d(TAG, "sysDm.scaledDensity: " + sysDm.scaledDensity)
+        Log.d(TAG, "sysDm.densityDpi: " + sysDm.densityDpi)
+        Log.d(TAG, "actDm.density: " + actDm.density)
+        Log.d(TAG, "actDm.scaledDensity: " + actDm.scaledDensity)
         Log.d(TAG, "actDm.densityDpi: " + actDm.densityDpi)
     }
 
@@ -60,7 +63,10 @@ object AdaptScreenUtils {
         actDm.densityDpi = sysDm.densityDpi
         Log.d(TAG, "cancelAdapt=================================")
         Log.d(TAG, "sysDm.density: " + sysDm.density)
-        Log.d(TAG, "appDm.scaledDensity: " + appDm.scaledDensity)
+        Log.d(TAG, "sysDm.scaledDensity: " + sysDm.scaledDensity)
+        Log.d(TAG, "sysDm.densityDpi: " + sysDm.densityDpi)
+        Log.d(TAG, "actDm.density: " + actDm.density)
+        Log.d(TAG, "actDm.scaledDensity: " + actDm.scaledDensity)
         Log.d(TAG, "actDm.densityDpi: " + actDm.densityDpi)
     }
 
