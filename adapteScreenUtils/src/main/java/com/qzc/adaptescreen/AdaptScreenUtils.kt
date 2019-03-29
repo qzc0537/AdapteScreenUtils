@@ -11,10 +11,10 @@ object AdaptScreenUtils {
      * 屏幕适配
      *
      * @param activity
-     * @param sizePx
+     * @param sizeDp
      * @param isVerticalSlide
      */
-    fun adaptScreen(activity: Activity, sizePx: Int, isVerticalSlide: Boolean) {
+    fun adaptScreen(activity: Activity, sizeDp: Int, isVerticalSlide: Boolean) {
         if (isAdaptScreen(activity)) {
             Log.d(TAG, "Already adaptScreen!")
             return
@@ -24,9 +24,9 @@ object AdaptScreenUtils {
         val actDm = activity.resources.displayMetrics
 
         if (isVerticalSlide) {
-            actDm.density = actDm.widthPixels.toFloat() / sizePx
+            actDm.density = actDm.widthPixels.toFloat() / sizeDp
         } else {
-            actDm.density = actDm.heightPixels.toFloat() / sizePx
+            actDm.density = actDm.heightPixels.toFloat() / sizeDp
         }
 
         actDm.scaledDensity = actDm.density * (sysDm.scaledDensity / sysDm.density)
