@@ -14,8 +14,8 @@ object AdaptScreenUtils {
     private var sTargetDensity: Float = 0.toFloat()
     // 目标的ScaledDensity
     private var sTargetScaledDensity: Float = 0.toFloat()
-    // 目标的DensityApi
-    private var sTargetDensityApi: Int = 0
+    // 目标的DensityDpi
+    private var sTargetDensityDpi: Int = 0
 
     /**
      * 屏幕适配
@@ -33,10 +33,12 @@ object AdaptScreenUtils {
         val sysDisplayMetrics = Resources.getSystem().displayMetrics
         val appDisplayMetrics = activity.applicationContext.resources.displayMetrics
         val actDisplayMetrics = activity.resources.displayMetrics
+        sNoncompatDensity = sysDisplayMetrics.density
+        sNoncompatScaledDensity = sysDisplayMetrics.scaledDensity
         Log.d(TAG, "Before adaptScreen=================================")
         Log.d(TAG, "sysDisplayMetrics.density: ${sysDisplayMetrics.density}")
         Log.d(TAG, "sysDisplayMetrics.scaledDensity: ${sysDisplayMetrics.scaledDensity}")
-        Log.d(TAG, "sysDisplayMetrics.densityApi: ${sysDisplayMetrics.densityDpi}")
+        Log.d(TAG, "sysDisplayMetrics.densityDpi: ${sysDisplayMetrics.densityDpi}")
 
         sTargetDensity = if (isVerticalSlide) {
             actDisplayMetrics.widthPixels.toFloat() / designSize[0]
@@ -44,19 +46,19 @@ object AdaptScreenUtils {
             actDisplayMetrics.heightPixels.toFloat() / designSize[1]
         }
         sTargetScaledDensity = sTargetDensity * (sNoncompatScaledDensity / sNoncompatDensity)
-        sTargetDensityApi = (160 * sTargetDensity).toInt()
+        sTargetDensityDpi = (160 * sTargetDensity).toInt()
 
         appDisplayMetrics.density = sTargetDensity
         appDisplayMetrics.scaledDensity = sTargetScaledDensity
-        appDisplayMetrics.densityDpi = sTargetDensityApi
+        appDisplayMetrics.densityDpi = sTargetDensityDpi
 
         actDisplayMetrics.density = sTargetDensity
         actDisplayMetrics.scaledDensity = sTargetScaledDensity
-        actDisplayMetrics.densityDpi = sTargetDensityApi
+        actDisplayMetrics.densityDpi = sTargetDensityDpi
         Log.d(TAG, "After adaptScreen=================================")
         Log.d(TAG, "sTargetDensity: $sTargetDensity")
         Log.d(TAG, "sTargetScaledDensity: $sTargetScaledDensity")
-        Log.d(TAG, "sTargetDensityApi: $sTargetDensityApi")
+        Log.d(TAG, "sTargetDensityDpi: $sTargetDensityDpi")
     }
 
     /**
