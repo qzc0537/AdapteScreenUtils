@@ -6,42 +6,57 @@ import android.util.Log
 
 object AdaptScreenUtils {
     private val TAG = "AdaptScreenUtils"
+    // 系统的Density
+    private var sNoncompatDensity: Float = 0.toFloat()
+    // 系统的ScaledDensity
+    private var sNoncompatScaledDensity: Float = 0.toFloat()
+    // 目标的Density
+    private var sTargetDensity: Float = 0.toFloat()
+    // 目标的ScaledDensity
+    private var sTargetScaledDensity: Float = 0.toFloat()
+    // 目标的DensityApi
+    private var sTargetDensityApi: Int = 0
 
     /**
      * 屏幕适配
      *
      * @param activity
-     * @param sizeDp
-     * @param isVerticalSlide
+     * @param designSize        设计图尺寸
+     * @param isVerticalSlide   垂直方向是否滚动
      */
-    fun adaptScreen(activity: Activity, sizeDp: Int, isVerticalSlide: Boolean) {
+    @JvmStatic
+    fun adaptScreen(activity: Activity, designSize: IntArray, isVerticalSlide: Boolean) {
         if (isAdaptScreen(activity)) {
             Log.d(TAG, "Already adaptScreen!")
             return
         }
-        val sysDm = Resources.getSystem().displayMetrics
-        val appDm = activity.applicationContext.resources.displayMetrics
-        val actDm = activity.resources.displayMetrics
+        val sysDisplayMetrics = Resources.getSystem().displayMetrics
+        val appDisplayMetrics = activity.applicationContext.resources.displayMetrics
+        val actDisplayMetrics = activity.resources.displayMetrics
+        Log.d(TAG, "Before adaptScreen=================================")
+        Log.d(TAG, "sysDisplayMetrics.density: ${sysDisplayMetrics.density}")
+        Log.d(TAG, "sysDisplayMetrics.scaledDensity: ${sysDisplayMetrics.scaledDensity}")
+        Log.d(TAG, "sysDisplayMetrics.densityApi: ${sysDisplayMetrics.densityDpi}")
 
-        if (isVerticalSlide) {
-            actDm.density = actDm.widthPixels.toFloat() / sizeDp
+        sTargetDensity = if (isVerticalSlide) {
+            actDisplayMetrics.widthPixels.toFloat() / designSize[0]
         } else {
-            actDm.density = actDm.heightPixels.toFloat() / sizeDp
+            actDisplayMetrics.heightPixels.toFloat() / designSize[1]
         }
+        sTargetScaledDensity = sTargetDensity * (sNoncompatScaledDensity / sNoncompatDensity)
+        sTargetDensityApi = (160 * sTargetDensity).toInt()
 
-        actDm.scaledDensity = actDm.density * (sysDm.scaledDensity / sysDm.density)
-        actDm.densityDpi = (160 * actDm.density).toInt()
+        appDisplayMetrics.density = sTargetDensity
+        appDisplayMetrics.scaledDensity = sTargetScaledDensity
+        appDisplayMetrics.densityDpi = sTargetDensityApi
 
-        appDm.density = actDm.density
-        appDm.scaledDensity = actDm.scaledDensity
-        appDm.densityDpi = actDm.densityDpi
-        Log.d(TAG, "adaptScreen=================================")
-        Log.d(TAG, "sysDm.density: " + sysDm.density)
-        Log.d(TAG, "sysDm.scaledDensity: " + sysDm.scaledDensity)
-        Log.d(TAG, "sysDm.densityDpi: " + sysDm.densityDpi)
-        Log.d(TAG, "actDm.density: " + actDm.density)
-        Log.d(TAG, "actDm.scaledDensity: " + actDm.scaledDensity)
-        Log.d(TAG, "actDm.densityDpi: " + actDm.densityDpi)
+        actDisplayMetrics.density = sTargetDensity
+        actDisplayMetrics.scaledDensity = sTargetScaledDensity
+        actDisplayMetrics.densityDpi = sTargetDensityApi
+        Log.d(TAG, "After adaptScreen=================================")
+        Log.d(TAG, "sTargetDensity: $sTargetDensity")
+        Log.d(TAG, "sTargetScaledDensity: $sTargetScaledDensity")
+        Log.d(TAG, "sTargetDensityApi: $sTargetDensityApi")
     }
 
     /**
@@ -49,25 +64,20 @@ object AdaptScreenUtils {
      *
      * @param activity
      */
+    @JvmStatic
     fun cancelAdapt(activity: Activity) {
-        val sysDm = Resources.getSystem().displayMetrics
-        val appDm = activity.applicationContext.resources.displayMetrics
-        val actDm = activity.resources.displayMetrics
+        val sysDisplayMetrics = Resources.getSystem().displayMetrics
+        val appDisplayMetrics = activity.applicationContext.resources.displayMetrics
+        val actDisplayMetrics = activity.resources.displayMetrics
 
-        appDm.density = sysDm.density
-        appDm.scaledDensity = sysDm.scaledDensity
-        appDm.densityDpi = sysDm.densityDpi
+        appDisplayMetrics.density = sysDisplayMetrics.density
+        appDisplayMetrics.scaledDensity = sysDisplayMetrics.scaledDensity
+        appDisplayMetrics.densityDpi = sysDisplayMetrics.densityDpi
 
-        actDm.density = sysDm.density
-        actDm.scaledDensity = sysDm.scaledDensity
-        actDm.densityDpi = sysDm.densityDpi
+        actDisplayMetrics.density = sysDisplayMetrics.density
+        actDisplayMetrics.scaledDensity = sysDisplayMetrics.scaledDensity
+        actDisplayMetrics.densityDpi = sysDisplayMetrics.densityDpi
         Log.d(TAG, "cancelAdapt=================================")
-        Log.d(TAG, "sysDm.density: " + sysDm.density)
-        Log.d(TAG, "sysDm.scaledDensity: " + sysDm.scaledDensity)
-        Log.d(TAG, "sysDm.densityDpi: " + sysDm.densityDpi)
-        Log.d(TAG, "actDm.density: " + actDm.density)
-        Log.d(TAG, "actDm.scaledDensity: " + actDm.scaledDensity)
-        Log.d(TAG, "actDm.densityDpi: " + actDm.densityDpi)
     }
 
     /**
@@ -76,6 +86,7 @@ object AdaptScreenUtils {
      * @param activity
      * @return
      */
+    @JvmStatic
     fun isAdaptScreen(activity: Activity): Boolean {
         val sysDm = Resources.getSystem().displayMetrics
         val actDm = activity.resources.displayMetrics
