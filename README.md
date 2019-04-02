@@ -24,9 +24,9 @@ allprojects {
 2.app build.gradle下添加依赖 ：
 
 ```
-implementation 'com.github.qzc0537:AdapteScreenUtils:1.0.1'
+implementation 'com.github.qzc0537:AdapteScreenUtils:1.0.2'
 ```
 
 3.愉快的使用：
 ```
-                AdaptScreenUtils.adaptScreen(mContext, if (isVerticalSlide) 375 else 667, isVerticalSlide)
+AdaptScreenUtils.adaptScreen(mContext, intArrayOf(360, 640), isVerticalSlide)
