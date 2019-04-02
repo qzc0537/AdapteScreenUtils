@@ -29,4 +29,4 @@ implementation 'com.github.qzc0537:AdapteScreenUtils:1.0.2'
 
 3.愉快的使用：
 ```
-AdapteScreenUtils.adaptScreen(mContext, intArrayOf(360, 640), isVerticalSlide)
+AdaptScreenUtils.adaptScreen(mContext, intArrayOf(360, 640), isVerticalSlide)
