@@ -26,10 +26,10 @@ object AdaptScreenUtils {
      */
     @JvmStatic
     fun adaptScreen(activity: Activity, designSize: IntArray, isVerticalSlide: Boolean) {
-//        if (isAdaptScreen(activity)) {
-//            Log.d(TAG, "Already adaptScreen!")
-//            return
-//        }
+        if (isAdaptScreen(activity)) {
+            Log.d(TAG, "Already adapted!")
+            return
+        }
         val sysDisplayMetrics = Resources.getSystem().displayMetrics
         val appDisplayMetrics = activity.applicationContext.resources.displayMetrics
         val actDisplayMetrics = activity.resources.displayMetrics
