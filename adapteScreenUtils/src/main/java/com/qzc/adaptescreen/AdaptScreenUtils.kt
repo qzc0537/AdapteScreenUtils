@@ -7,13 +7,13 @@ import android.util.Log
 object AdaptScreenUtils {
     private val TAG = "AdaptScreenUtils"
     // 系统的Density
-    private var sNoncompatDensity: Float = 0.toFloat()
+    private var sNoncompatDensity: Float = 0f
     // 系统的ScaledDensity
-    private var sNoncompatScaledDensity: Float = 0.toFloat()
+    private var sNoncompatScaledDensity: Float = 0f
     // 目标的Density
-    private var sTargetDensity: Float = 0.toFloat()
+    private var sTargetDensity: Float = 0f
     // 目标的ScaledDensity
-    private var sTargetScaledDensity: Float = 0.toFloat()
+    private var sTargetScaledDensity: Float = 0f
     // 目标的DensityDpi
     private var sTargetDensityDpi: Int = 0
 
@@ -22,10 +22,14 @@ object AdaptScreenUtils {
      *
      * @param activity
      * @param designSize        设计图尺寸
-     * @param isVerticalSlide   垂直方向是否滚动
+     * @param isVerticalSlide   垂直方向是否滚动(true: 适配宽度 false: 适配高度)
      */
     @JvmStatic
-    fun adaptScreen(activity: Activity, designSize: IntArray, isVerticalSlide: Boolean) {
+    fun adaptScreen(
+        activity: Activity,
+        designSize: IntArray,
+        isVerticalSlide: Boolean = true
+    ) {
         if (isAdaptScreen(activity)) {
             Log.d(TAG, "Already adapted!")
             return
@@ -45,7 +49,11 @@ object AdaptScreenUtils {
         } else {
             actDisplayMetrics.heightPixels.toFloat() / designSize[1]
         }
-        sTargetScaledDensity = sTargetDensity * (sNoncompatScaledDensity / sNoncompatDensity)
+        if (AdapterScreenConfig.getInstance().isFontScale) {
+            sTargetScaledDensity = sTargetDensity
+        } else {
+            sTargetScaledDensity = sTargetDensity * (sNoncompatScaledDensity / sNoncompatDensity)
+        }
         sTargetDensityDpi = (160 * sTargetDensity).toInt()
 
         appDisplayMetrics.density = sTargetDensity
@@ -56,9 +64,9 @@ object AdaptScreenUtils {
         actDisplayMetrics.scaledDensity = sTargetScaledDensity
         actDisplayMetrics.densityDpi = sTargetDensityDpi
         Log.d(TAG, "After adaptScreen=================================")
-        Log.d(TAG, "sTargetDensity: $sTargetDensity")
-        Log.d(TAG, "sTargetScaledDensity: $sTargetScaledDensity")
-        Log.d(TAG, "sTargetDensityDpi: $sTargetDensityDpi")
+        Log.d(TAG, "targetDensity: $sTargetDensity")
+        Log.d(TAG, "targetScaledDensity: $sTargetScaledDensity")
+        Log.d(TAG, "targetDensityDpi: $sTargetDensityDpi")
     }
 
     /**

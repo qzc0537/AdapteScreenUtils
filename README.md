@@ -1,8 +1,6 @@
 # AdapteScreenUtils
 基于头条方案的屏幕适配库
 
-本库基于https://github.com/niorgai/AdapteScreenUtils
-
 [![](https://jitpack.io/v/qzc0537/AdapteScreenUtils.svg)](https://jitpack.io/#qzc0537/AdapteScreenUtils)
 
 
@@ -24,7 +22,7 @@ allprojects {
 2.app build.gradle下添加依赖 ：
 
 ```
-implementation 'com.github.qzc0537:AdapteScreenUtils:1.0.8'
+implementation 'com.github.qzc0537:AdapteScreenUtils:1.0.9'
 ```
 
 3.愉快的使用：
