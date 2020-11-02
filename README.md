@@ -3,7 +3,6 @@
 
 [![](https://jitpack.io/v/qzc0537/AdapteScreenUtils.svg)](https://jitpack.io/#qzc0537/AdapteScreenUtils)
 
-
 使用
 --
 1.project build.gradle下添加：
