@@ -1,6 +1,7 @@
 # AdapteScreenUtils
 基于头条方案的屏幕适配库
 
+[![](https://jitpack.io/v/qzc0537/AdapteScreenUtils.svg)](https://jitpack.io/#qzc0537/AdapteScreenUtils)
 
 使用
 --
